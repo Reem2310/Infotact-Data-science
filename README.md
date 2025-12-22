@@ -1,13 +1,58 @@
-Predictive Maintenance Pipeline (CMAPSS Dataset)This repository contains the Week 1: Data Engineering and Baseline Modeling phase of a Predictive Maintenance project. The objective is to predict the Remaining Useful Life (RUL) of jet engines and classify potential failures using the NASA CMAPSS dataset.📌 Project OverviewThis script processes raw sensor data from multiple jet engine simulations, performs data cleaning, engineers temporal features, and establishes a baseline classification model to predict engine failure within a 24-hour cycle window.⚙️ Key FeaturesThe pipeline currently performs the following operations:Multi-File Ingestion: Automatically detects and loads multiple CMAPSS training files (train_FD001.txt through train_FD004.txt).Data Cleaning:Removes sensors with zero variance (constant values) to reduce noise.Implements forward-filling strategies to handle missing time-series data.Temporal Feature Engineering:Lag Features: Generates 1-step and 2-step lag features for key sensors (Sensors 2, 3, and 4).Rolling Statistics: Calculates Rolling Mean and Rolling Standard Deviation using a window size of 5.Target Generation:Calculates Remaining Useful Life (RUL) for each engine.Creates a binary target variable failure_24h (1 if RUL $\le$ 24 cycles, 0 otherwise).Exploratory Analysis: Generates and saves a sensor correlation heatmap.Baseline Modeling: Implements a Logistic Regression model with a time-aware train/test split (no shuffling) to respect the temporal nature of the data.📂 Directory StructureTo run the script successfully, ensure your directory looks like this:Plaintext├── CMaps/                     # Create this folder and place input files here
+<div align="center">
+
+# ✈️ Predictive Maintenance with Explainable AI (XAI)
+### Remaining Useful Life (RUL) Prediction on NASA CMAPSS Data
+
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python)
+![Scikit-Learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![SHAP](https://img.shields.io/badge/SHAP-Explainable_AI-ff0055?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Week_1_Complete-success?style=for-the-badge)
+
+<p align="center">
+  <strong>A data engineering and machine learning pipeline to predict jet engine failures <br>
+  and explain <i>why</i> they occur using SHAP values.</strong>
+</p>
+
+</div>
+
+---
+
+## 📖 Project Overview
+
+This repository contains an end-to-end pipeline for **Predictive Maintenance**. Using the **NASA CMAPSS Jet Engine dataset**, the project aims to predict whether an engine will fail within a specific time window (24 cycles) and uses Explainable AI (XAI) to interpret the root causes of failure predictions.
+
+Current Status: **Week 1 (Data Engineering & Baseline Modeling)**.
+
+## ⚙️ Key Features
+
+* **🔄 Multi-Stream Ingestion**: Automates loading of multiple CMAPSS data files (`FD001` - `FD004`).
+* **🧹 Smart Data Cleaning**:
+    * Identifies and drops sensors with zero variance (noise reduction).
+    * Handles missing data via forward-filling.
+* **⏱️ Temporal Feature Engineering**:
+    * **Lag Features**: Captures trends using 1-step and 2-step lags.
+    * **Rolling Statistics**: Calculates Rolling Mean and Std Dev (Window=5).
+* **🎯 Target Generation**:
+    * Computes **RUL** (Remaining Useful Life).
+    * Generates binary failure labels (`failure_24h`) for classification.
+* **🧠 Baseline Model**: Logistic Regression with time-aware splitting.
+
+---
+
+## 📂 Directory Structure
+
+Ensure your project folder is organized as follows:
+
+```text
+├── CMaps/                     # 📥 Input Data (Download from NASA)
 │   ├── train_FD001.txt
 │   ├── train_FD002.txt
 │   ├── train_FD003.txt
 │   └── train_FD004.txt
-├── output/                    # Generated automatically by the script
+├── output/                    # 📤 Generated Artifacts
 │   ├── correlation_matrix.png
+│   ├── shap_summary_plot.png
 │   └── week1_feature_engineered_dataset.csv
-├── Predictive Maintenance with Explainable AI.py
-└── README.md
-🛠️ Prerequisites & InstallationClone the repositoryInstall Dependencies:The script requires the following Python libraries:pandasnumpymatplotlibseabornscikit-learnYou can install them via pip:Bashpip install pandas numpy matplotlib seaborn scikit-learn
-Download Data:Download the NASA CMAPSS Jet Engine Data and place the train_FD00x.txt files into a folder named CMaps in the root directory.🚀 UsageRun the Python script to execute the data pipeline:Bashpython "Predictive Maintenance with Explainable AI.py"
-OutputsAfter execution, check the output/ directory for:week1_feature_engineered_dataset.csv: The fully processed dataset ready for advanced modeling.correlation_matrix.png: A visualization of sensor correlations.Console Output: The script will print the Classification Report (Precision, Recall, F1-Score) for the baseline Logistic Regression model.📊 Baseline ResultsThe script utilizes a Logistic Regression model as a baseline.Split Strategy: Sequential split (Train on past, Test on future) to prevent data leakage.Scaling: Standard Scaler applied to features.Class Weight: Balanced (to handle the rarity of failure events).
+├── Predictive Maintenance with Explainable AI.py   # 📜 Main Script
+├── requirements.txt           # 📦 Dependencies
+└── README.md                  # 📄 This file
