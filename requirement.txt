@@ -1,8 +1,15 @@
+# Data Manipulation & Math
 pandas
 numpy
+joblib
+
+# Visualization
 matplotlib
 seaborn
-scikit-learn
-shap
 
-    
+# Machine Learning & Metrics
+scikit-learn
+xgboost
+
+# Explainable AI (XAI)
+shap
